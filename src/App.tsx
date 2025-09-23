@@ -1,16 +1,50 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { TokenChip } from './components/TokenChip';
-import { Panel } from './components/Panel';
+import { 
+  TokenChip, 
+  Panel, 
+  TokenSelector, 
+  AmountInput, 
+  TokenDisplay 
+} from './components/TokenSwap';
 import { ErrorFallback } from './components/ErrorFallback';
 import { Token, TOKEN_LIST, DEFAULT_TOKEN } from './constants/tokens';
 
-const App = () => {
-  const [active, setActive] = useState<Token>(DEFAULT_TOKEN);
+// Mock price data - in real app, this would come from API
+const MOCK_PRICES: Record<Token, number> = {
+  [Token.USDC]: 1.00,
+  [Token.USDT]: 1.00,
+  [Token.ETH]: 2500.00,
+  [Token.WBTC]: 45000.00,
+};
 
-  const handleTokenSelect = useCallback((token: Token) => {
-    setActive(token);
+const App = () => {
+  const [sourceToken, setSourceToken] = useState<Token>(DEFAULT_TOKEN);
+  const [targetToken, setTargetToken] = useState<Token>(Token.ETH);
+  const [usdAmount, setUsdAmount] = useState<number>(100);
+
+  const handleSourceTokenChange = useCallback((token: Token) => {
+    setSourceToken(token);
   }, []);
+
+  const handleTargetTokenChange = useCallback((token: Token) => {
+    setTargetToken(token);
+  }, []);
+
+  const handleUsdAmountChange = useCallback((amount: number) => {
+    setUsdAmount(amount);
+  }, []);
+
+  // Calculate token amounts based on USD input
+  const sourceAmount = useMemo(() => {
+    const price = MOCK_PRICES[sourceToken];
+    return price ? usdAmount / price : null;
+  }, [usdAmount, sourceToken]);
+
+  const targetAmount = useMemo(() => {
+    const price = MOCK_PRICES[targetToken];
+    return price ? usdAmount / price : null;
+  }, [usdAmount, targetToken]);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -21,21 +55,58 @@ const App = () => {
             <TokenChip
               key={token}
               label={token}
-              active={active === token}
-              onClick={() => handleTokenSelect(token)}
+              active={sourceToken === token}
+              onClick={() => handleSourceTokenChange(token)}
             />
           ))}
         </div>
 
         <div className="panes">
           <Panel>
-            {/* left content placeholder */}
+            <div className="panel-content">
+              <TokenSelector
+                label="From"
+                selectedToken={sourceToken}
+                onTokenChange={handleSourceTokenChange}
+                tokens={TOKEN_LIST}
+              />
+              
+              <AmountInput
+                label="USD Amount"
+                value={usdAmount}
+                onChange={handleUsdAmountChange}
+                placeholder="100.00"
+                min={0}
+                step={0.01}
+              />
+              
+              <TokenDisplay
+                token={sourceToken}
+                amount={sourceAmount}
+                price={MOCK_PRICES[sourceToken]}
+              />
+            </div>
           </Panel>
+          
           <div className="arrow" aria-hidden="true">
             →
           </div>
+          
           <Panel>
-            {/* right content placeholder */}
+            <div className="panel-content">
+              <TokenSelector
+                label="To"
+                selectedToken={targetToken}
+                onTokenChange={handleTargetTokenChange}
+                tokens={TOKEN_LIST}
+              />
+              
+              <TokenDisplay
+                token={targetToken}
+                amount={targetAmount}
+                price={MOCK_PRICES[targetToken]}
+              />
+            </div>
           </Panel>
         </div>
       </div>

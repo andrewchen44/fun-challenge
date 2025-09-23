@@ -1,8 +1,7 @@
-import React from 'react';
 import clsx from 'clsx';
 import './styles.css';
 
-import type { Token } from '../../constants/tokens';
+import type { Token } from '../../../constants/tokens';
 
 interface TokenChipProps {
   label: Token;

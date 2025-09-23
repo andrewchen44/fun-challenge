@@ -5,8 +5,8 @@
   --color-primary: #7a7a7a;
   --color-primary-hover: #5a5a5a;
   --color-primary-active: #4a4a4a;
-  --color-text: #333;
-  --color-text-light: #1a1a1a;
+  --color-text: #000;
+  --color-text-light: #000;
   --color-text-muted: #6b6b6b;
   --color-background: #fff;
   --color-background-active: #ececec;
@@ -55,6 +55,9 @@
   --container-max-width: 980px;
   --panel-min-height: 280px;
   --arrow-size: 40px;
+  
+  /* Panel Content */
+  --panel-content-gap: 1.5rem;
 }
 
 * {

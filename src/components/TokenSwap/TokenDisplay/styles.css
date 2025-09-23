@@ -1,0 +1,35 @@
+.token-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+}
+
+.token-display__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.token-display__symbol {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.token-display__loading {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.token-display__price {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+}
+
+.token-display__amount {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
