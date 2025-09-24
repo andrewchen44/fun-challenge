@@ -22,6 +22,8 @@ A modern React + TypeScript application for exploring cryptocurrency token price
   - _Why_: Native CSS approach with design tokens for consistency, maintainability, and performance without additional runtime overhead
 - **API**: Funkit API Base for token data and prices
   - _Why_: Provides reliable, real-time cryptocurrency data with proper TypeScript types and error handling
+- **Testing**: Vitest + React Testing Library
+  - _Why_: Vitest provides fast unit testing with excellent TypeScript support and Vite integration, React Testing Library ensures components are tested from a user's perspective
 - **Code Quality**: ESLint + Prettier
   - _Why_: ESLint catches code quality issues and enforces best practices, Prettier ensures consistent code formatting across the team
 - **Git Hooks**: Husky + lint-staged
@@ -106,24 +108,27 @@ The application uses a comprehensive CSS custom properties system for consistent
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
+- `npm run test` - Run tests with Vitest
 - `npm run lint` - Run ESLint
 - `npm run format` - Format code with Prettier
 - `npm run prepare` - Initialize husky git hooks
 
 ## Pre-commit Hooks
 
-This project uses **husky** and **lint-staged** to automatically run linting and formatting before each commit:
+This project uses **husky** and **lint-staged** to automatically run linting, formatting, and tests before each commit:
 
 - **ESLint**: Automatically fixes linting issues in TypeScript/React files
 - **Prettier**: Formats code for consistent styling
+- **Vitest**: Runs the full test suite to ensure no regressions
 - **Staged files only**: Only processes files that are staged for commit
 
 ### What happens on commit:
 
 1. ESLint runs with `--fix` flag on staged `.ts` and `.tsx` files
 2. Prettier formats staged `.ts`, `.tsx`, `.css`, `.md`, and `.json` files
-3. If any issues cannot be auto-fixed, the commit is blocked
-4. You must fix the issues manually and stage the changes again
+3. Vitest runs the complete test suite
+4. If any issues cannot be auto-fixed or tests fail, the commit is blocked
+5. You must fix the issues manually and stage the changes again
 
 ### Bypassing hooks (not recommended):
 

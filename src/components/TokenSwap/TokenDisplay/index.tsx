@@ -12,7 +12,10 @@ interface TokenDisplayProps {
 export const TokenDisplay = ({ token, amount, price, isLoading = false }: TokenDisplayProps) => {
   const formatAmount = (value: number | null) => {
     if (value === null) return '—';
-    return value.toFixed(6);
+    return value.toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 6,
+    });
   };
 
   const formatPrice = (value: number | null | undefined) => {
@@ -27,13 +30,17 @@ export const TokenDisplay = ({ token, amount, price, isLoading = false }: TokenD
         {isLoading && <span className="token-display__loading">Loading...</span>}
       </div>
 
-      <div className="token-display__price">
-        {formatPrice(price)} per {token}
-      </div>
+      {!isLoading && (
+        <>
+          <div className="token-display__price">
+            {formatPrice(price)} per {token}
+          </div>
 
-      <div className="token-display__amount">
-        ≈ {formatAmount(amount)} {token}
-      </div>
+          <div className="token-display__amount">
+            ≈ {formatAmount(amount)} {token}
+          </div>
+        </>
+      )}
     </div>
   );
 };

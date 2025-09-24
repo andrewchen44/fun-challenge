@@ -87,6 +87,7 @@ const App = () => {
                 onChange={handleUsdAmountChange}
                 placeholder="100.00"
                 min={0}
+                max={1000000000000}
                 step={0.01}
                 disabled={isLoading}
               />
@@ -120,7 +121,13 @@ const App = () => {
 
               <div className="amount-display">
                 <div className="amount-display__label">USD Amount</div>
-                <div className="amount-display__value">${usdAmount.toFixed(2)}</div>
+                <div className="amount-display__value">
+                  $
+                  {usdAmount.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </div>
               </div>
 
               <TokenDisplay
