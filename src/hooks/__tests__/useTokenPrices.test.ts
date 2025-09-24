@@ -35,7 +35,6 @@ describe('useTokenPrices', () => {
       hookResult = result;
     });
 
-    // Wait for the fetch to complete
     await waitFor(() => {
       expect(hookResult.current.isLoading).toBe(false);
     });
@@ -59,7 +58,6 @@ describe('useTokenPrices', () => {
       hookResult = result;
     });
 
-    // Wait for the fetch to complete
     await waitFor(() => {
       expect(hookResult.current.isLoading).toBe(false);
     });
@@ -170,22 +168,6 @@ describe('useTokenPrices', () => {
     // Should not throw
     await act(async () => {
       await expect(hookResult.current.refetchToken(Token.USDC)).resolves.not.toThrow();
-    });
-  });
-
-  it('should not fetch when no tokens are provided', async () => {
-    // This test is no longer applicable since we always provide two tokens
-    // But we can test with undefined tokens if needed
-    await act(async () => {
-      renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
-    });
-
-    // Should still fetch since we always have tokens
-    expect(mockGetTokenPrices).toHaveBeenCalled();
-
-    // Wait for any async effects to complete
-    await waitFor(() => {
-      expect(mockGetTokenPrices).toHaveBeenCalled();
     });
   });
 

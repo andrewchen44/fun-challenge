@@ -36,20 +36,3 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-.amount-input__field--error {
-  border-color: var(--color-error);
-  background-color: var(--color-error-bg);
-}
-
-.amount-input__field--error:focus {
-  border-color: var(--color-error);
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-}
-
-.amount-input__error {
-  font-size: var(--font-size-sm);
-  color: var(--color-error-text);
-  margin-top: var(--spacing-xs);
-  line-height: 1.4;
-}

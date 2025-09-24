@@ -30,8 +30,8 @@ describe('AmountInput', () => {
 
     // The component calls onChange for valid input
     expect(handleChange).toHaveBeenCalled();
-    // With validation, onChange is called less frequently
-    expect(handleChange).toHaveBeenCalledTimes(1); // Only for the final valid value
+    // onChange is called for clear + each valid character typed
+    expect(handleChange).toHaveBeenCalledTimes(4); // For clear + each character: clear, 2, 0, 0
   });
 
   it('should handle zero value correctly', () => {
@@ -65,24 +65,23 @@ describe('AmountInput', () => {
         onChange={vi.fn()}
         placeholder="Enter amount"
         min={0}
-        step={0.01}
       />,
     );
 
     const input = screen.getByLabelText('USD Amount');
     expect(input).toHaveAttribute('type', 'text');
     expect(input).toHaveAttribute('placeholder', 'Enter amount');
-    // min and step attributes are not used with text input type
+    // min attribute is used for validation but not as HTML attribute
   });
 
   it('should use default placeholder when not provided', () => {
     render(<AmountInput label="USD Amount" value={100} onChange={vi.fn()} />);
 
     const input = screen.getByLabelText('USD Amount');
-    expect(input).toHaveAttribute('placeholder', '0.00');
+    expect(input).toHaveAttribute('placeholder', '0');
   });
 
-  it('should handle decimal input correctly', async () => {
+  it('should handle integer input correctly', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
 
@@ -90,15 +89,15 @@ describe('AmountInput', () => {
 
     const input = screen.getByLabelText('USD Amount');
     await user.clear(input);
-    await user.type(input, '123.45');
+    await user.type(input, '123');
 
     // The component calls onChange for valid input
     expect(handleChange).toHaveBeenCalled();
-    // With validation, onChange is called less frequently
-    expect(handleChange).toHaveBeenCalledTimes(1); // Only for the final valid value
+    // onChange is called for clear + each valid character typed
+    expect(handleChange).toHaveBeenCalledTimes(4); // For clear + each character: clear, 1, 2, 3
   });
 
-  it('should handle invalid input gracefully', async () => {
+  it('should filter out non-numeric characters', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
 
@@ -106,10 +105,10 @@ describe('AmountInput', () => {
 
     const input = screen.getByLabelText('USD Amount');
     await user.clear(input);
-    await user.type(input, 'abc');
+    await user.type(input, 'abc123def');
 
-    // The component should handle invalid input without crashing
-    // We just verify the component is still functional
-    expect(input).toBeInTheDocument();
+    // Should only show the numeric characters
+    expect(input).toHaveValue('123');
+    expect(handleChange).toHaveBeenCalledWith(123);
   });
 });
