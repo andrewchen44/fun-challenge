@@ -23,6 +23,11 @@
       "prettier --write"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
     "@funkit/api-base": "^1.12.0",
     "clsx": "^2.1.1",
