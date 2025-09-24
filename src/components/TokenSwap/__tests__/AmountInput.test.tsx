@@ -112,38 +112,4 @@ describe('AmountInput', () => {
     // We just verify the component is still functional
     expect(input).toBeInTheDocument();
   });
-
-  it.skip('should show error message for invalid input', async () => {
-    const user = userEvent.setup();
-    const handleChange = vi.fn();
-
-    render(<AmountInput label="USD Amount" value={0} onChange={handleChange} />);
-
-    const input = screen.getByLabelText('USD Amount');
-    await user.clear(input);
-    await user.type(input, 'abc');
-
-    // Should show error message
-    expect(
-      screen.getByText('Please enter a valid number (only digits and one decimal point allowed)'),
-    ).toBeInTheDocument();
-    expect(input).toHaveClass('amount-input__field--error');
-  });
-
-  it.skip('should prevent non-numeric characters from being typed', async () => {
-    const user = userEvent.setup();
-    const handleChange = vi.fn();
-
-    render(<AmountInput label="USD Amount" value={0} onChange={handleChange} />);
-
-    const input = screen.getByLabelText('USD Amount');
-    await user.clear(input);
-
-    // Try to type letters - they should be prevented by keyDown handler
-    await user.type(input, 'abc123');
-
-    // The keyDown handler should prevent non-numeric characters
-    // So only the numeric part should be in the input
-    expect(input).toHaveValue('123');
-  });
 });
