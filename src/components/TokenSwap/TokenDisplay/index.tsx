@@ -5,7 +5,7 @@ import type { Token } from '../../../constants/tokens';
 interface TokenDisplayProps {
   token: Token;
   amount: number | null;
-  price: number | null;
+  price: number | null | undefined;
   isLoading?: boolean;
 }
 
@@ -15,8 +15,8 @@ export const TokenDisplay = ({ token, amount, price, isLoading = false }: TokenD
     return value.toFixed(6);
   };
 
-  const formatPrice = (value: number | null) => {
-    if (!value) return '—';
+  const formatPrice = (value: number | null | undefined) => {
+    if (value === null || value === undefined) return '—';
     return `$${value.toLocaleString()}`;
   };
 
