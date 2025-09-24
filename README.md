@@ -5,6 +5,7 @@ A modern React + TypeScript application for exploring cryptocurrency token price
 ## Features
 
 - **Real-time Token Prices**: Fetches live prices from the Funkit API for USDC, USDT, ETH, and WBTC
+- **Token Swap Interface**: Clean, intuitive UI for comparing token values
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Error Handling**: Robust error boundaries and user-friendly error messages
 - **Loading States**: Smooth loading indicators during API calls
@@ -14,11 +15,19 @@ A modern React + TypeScript application for exploring cryptocurrency token price
 ## Tech Stack
 
 - **Frontend**: React 18 + TypeScript
+  - *Why*: React provides component-based architecture for maintainable UI, TypeScript ensures type safety and catches errors at compile time
 - **Build Tool**: Vite
+  - *Why*: Fast development server with HMR, optimized production builds, and excellent TypeScript support out of the box
 - **Styling**: CSS with custom properties (design system)
+  - *Why*: Native CSS approach with design tokens for consistency, maintainability, and performance without additional runtime overhead
 - **API**: Funkit API Base for token data and prices
+  - *Why*: Provides reliable, real-time cryptocurrency data with proper TypeScript types and error handling
 - **Code Quality**: ESLint + Prettier
+  - *Why*: ESLint catches code quality issues and enforces best practices, Prettier ensures consistent code formatting across the team
+- **Git Hooks**: Husky + lint-staged
+  - *Why*: Automatically runs linting and formatting on staged files before commits, preventing code quality issues from entering the repository
 - **Error Handling**: React Error Boundary
+  - *Why*: Gracefully handles component crashes and provides fallback UI, improving user experience and debugging capabilities
 
 ## Prerequisites
 
@@ -146,3 +155,10 @@ This application was built with the following key design assumptions in mind:
 - **Simplicity**: Clean, intuitive interface that doesn't overwhelm users
 - **Reliability**: Robust error handling and loading states
 - **Accessibility**: Built with semantic HTML and ARIA attributes
+
+
+## Security Considerations
+
+- API keys are included for development purposes only
+- In production, API keys should be stored in environment variables
+- All user inputs are validated and sanitized
