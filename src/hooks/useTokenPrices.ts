@@ -6,25 +6,28 @@ interface UseTokenPricesReturn {
   prices: Partial<Record<Token, number | null>>;
   isLoading: boolean;
   error: string | null;
+  lastFetched: Date | null;
   refetch: () => Promise<void>;
   refetchToken: (token: Token) => Promise<void>;
 }
 
 /**
- * Hook to fetch and manage token prices
+ * Hook to fetch and manage token prices for specific tokens
  */
-export function useTokenPrices(tokens: Token[]): UseTokenPricesReturn {
+export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
   const [prices, setPrices] = useState<Partial<Record<Token, number | null>>>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastFetched, setLastFetched] = useState<Date | null>(null);
 
-  const fetchPrices = useCallback(async () => {
+  const fetchPrices = useCallback(async (tokens: Token[]) => {
     try {
       setIsLoading(true);
       setError(null);
       
       const fetchedPrices = await getTokenPrices(tokens);
-      setPrices(fetchedPrices);
+      setPrices(prev => ({ ...prev, ...fetchedPrices }));
+      setLastFetched(new Date());
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch prices';
       setError(errorMessage);
@@ -32,7 +35,7 @@ export function useTokenPrices(tokens: Token[]): UseTokenPricesReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [tokens]);
+  }, []);
 
   const refetchToken = useCallback(async (token: Token) => {
     try {
@@ -47,14 +50,17 @@ export function useTokenPrices(tokens: Token[]): UseTokenPricesReturn {
   }, []);
 
   useEffect(() => {
-    fetchPrices();
-  }, [fetchPrices]);
+    if (selectedTokens.length > 0) {
+      fetchPrices(selectedTokens);
+    }
+  }, [selectedTokens.join(','), fetchPrices]);
 
   return {
     prices,
     isLoading,
     error,
-    refetch: fetchPrices,
+    lastFetched,
+    refetch: () => fetchPrices(selectedTokens),
     refetchToken,
   };
 }

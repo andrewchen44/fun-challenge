@@ -16,8 +16,8 @@ const App = () => {
   const [targetToken, setTargetToken] = useState<Token>(Token.ETH);
   const [usdAmount, setUsdAmount] = useState<number>(100);
 
-  // Fetch real token prices from API
-  const { prices, isLoading, error, refetch } = useTokenPrices(TOKEN_LIST);
+  // Fetch real token prices from API for selected tokens only
+  const { prices, isLoading, error, lastFetched, refetch } = useTokenPrices([sourceToken, targetToken]);
 
   const handleSourceTokenChange = useCallback((token: Token) => {
     setSourceToken(token);
@@ -54,26 +54,38 @@ const App = () => {
             </button>
           </div>
         )}
-        <div className="token-row" role="tablist">
-          {TOKEN_LIST.map((token) => (
-            <TokenChip
-              key={token}
-              label={token}
-              active={sourceToken === token}
-              onClick={() => handleSourceTokenChange(token)}
-            />
-          ))}
-        </div>
 
+        <div className="price-info">
+          {lastFetched && (
+            <p className="last-updated">
+              Last updated: {lastFetched.toLocaleString(undefined, {
+                timeZoneName: 'short'
+              })}
+            </p>
+          )}
+          <button 
+            type="button" 
+            className="refresh-button"
+            onClick={refetch}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Refreshing...' : 'Refresh Prices'}
+          </button>
+        </div>
         <div className="panes">
           <Panel>
             <div className="panel-content">
-              <TokenSelector
-                label="From"
-                selectedToken={sourceToken}
-                onTokenChange={handleSourceTokenChange}
-                tokens={TOKEN_LIST}
-              />
+              <div className="token-row" role="tablist">
+                {TOKEN_LIST.map((token) => (
+                  <TokenChip
+                    key={token}
+                    label={token}
+                    active={sourceToken === token}
+                    onClick={() => handleSourceTokenChange(token)}
+                    disabled={isLoading}
+                  />
+                ))}
+              </div>
               
               <AmountInput
                 label="USD Amount"
@@ -82,6 +94,7 @@ const App = () => {
                 placeholder="100.00"
                 min={0}
                 step={0.01}
+                disabled={isLoading}
               />
               
               <TokenDisplay
@@ -99,12 +112,24 @@ const App = () => {
           
           <Panel>
             <div className="panel-content">
-              <TokenSelector
-                label="To"
-                selectedToken={targetToken}
-                onTokenChange={handleTargetTokenChange}
-                tokens={TOKEN_LIST}
-              />
+              <div className="token-row" role="tablist">
+                {TOKEN_LIST.map((token) => (
+                  <TokenChip
+                    key={token}
+                    label={token}
+                    active={targetToken === token}
+                    onClick={() => handleTargetTokenChange(token)}
+                    disabled={isLoading}
+                  />
+                ))}
+              </div>
+              
+              <div className="amount-display">
+                <label className="amount-display__label">USD Amount</label>
+                <div className="amount-display__value">
+                  ${usdAmount.toFixed(2)}
+                </div>
+              </div>
               
               <TokenDisplay
                 token={targetToken}
