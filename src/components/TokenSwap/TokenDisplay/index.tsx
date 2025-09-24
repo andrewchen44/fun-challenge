@@ -1,6 +1,7 @@
 import './styles.css';
 
 import type { Token } from '../../../constants/tokens';
+import { TOKEN_NAMES } from '../../../constants/tokens';
 
 interface TokenDisplayProps {
   token: Token;
@@ -26,7 +27,10 @@ export const TokenDisplay = ({ token, amount, price, isLoading = false }: TokenD
   return (
     <div className="token-display">
       <div className="token-display__header">
-        <span className="token-display__symbol">{token}</span>
+        <div className="token-display__symbol-container">
+          <span className="token-display__symbol">{token}</span>
+          <span className="token-display__name">({TOKEN_NAMES[token]})</span>
+        </div>
         {isLoading && <span className="token-display__loading">Loading...</span>}
       </div>
 

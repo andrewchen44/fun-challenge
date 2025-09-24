@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { ErrorFallback } from './components/ErrorFallback';
@@ -11,7 +11,6 @@ const App = () => {
   const [targetToken, setTargetToken] = useState<Token>(Token.ETH);
   const [usdAmount, setUsdAmount] = useState<number>(100);
 
-  // Fetch real token prices from API for selected tokens only
   const { prices, isLoading, error, lastFetched, refetch } = useTokenPrices(
     sourceToken,
     targetToken,
@@ -88,7 +87,6 @@ const App = () => {
                 placeholder="100.00"
                 min={0}
                 max={1000000000000}
-                step={0.01}
                 disabled={isLoading}
               />
 

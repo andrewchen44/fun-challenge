@@ -13,10 +13,22 @@
   gap: var(--spacing-sm);
 }
 
+.token-display__symbol-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
 .token-display__symbol {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-light);
+}
+
+.token-display__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
 }
 
 .token-display__loading {
