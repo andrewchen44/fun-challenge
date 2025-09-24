@@ -60,6 +60,11 @@
   
   /* Panel Content */
   --panel-content-gap: 1.5rem;
+
+  /* Error Banner */
+  --color-error-banner-bg: #fef2f2;
+  --color-error-banner-border: #fecaca;
+  --color-error-banner-text: #dc2626;
 }
 
 * {
@@ -127,6 +132,39 @@ body {
   .arrow {
     transform: rotate(90deg);
   }
+}
+
+.error-banner {
+  background: var(--color-error-banner-bg);
+  border: 1px solid var(--color-error-banner-border);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-banner p {
+  color: var(--color-error-banner-text);
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.error-banner button {
+  background: var(--color-error-banner-text);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.error-banner button:hover {
+  background: #b91c1c;
 }
 
 

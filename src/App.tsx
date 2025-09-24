@@ -1,27 +1,23 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { 
-  TokenChip, 
-  Panel, 
-  TokenSelector, 
-  AmountInput, 
-  TokenDisplay 
+import {
+  TokenChip,
+  Panel,
+  TokenSelector,
+  AmountInput,
+  TokenDisplay
 } from './components/TokenSwap';
 import { ErrorFallback } from './components/ErrorFallback';
 import { Token, TOKEN_LIST, DEFAULT_TOKEN } from './constants/tokens';
-
-// Mock price data - in real app, this would come from API
-const MOCK_PRICES: Record<Token, number> = {
-  [Token.USDC]: 1.00,
-  [Token.USDT]: 1.00,
-  [Token.ETH]: 2500.00,
-  [Token.WBTC]: 45000.00,
-};
+import { useTokenPrices } from './hooks/useTokenPrices';
 
 const App = () => {
   const [sourceToken, setSourceToken] = useState<Token>(DEFAULT_TOKEN);
   const [targetToken, setTargetToken] = useState<Token>(Token.ETH);
   const [usdAmount, setUsdAmount] = useState<number>(100);
+
+  // Fetch real token prices from API
+  const { prices, isLoading, error, refetch } = useTokenPrices(TOKEN_LIST);
 
   const handleSourceTokenChange = useCallback((token: Token) => {
     setSourceToken(token);
@@ -35,21 +31,29 @@ const App = () => {
     setUsdAmount(amount);
   }, []);
 
-  // Calculate token amounts based on USD input
   const sourceAmount = useMemo(() => {
-    const price = MOCK_PRICES[sourceToken];
+    const price = prices[sourceToken];
     return price ? usdAmount / price : null;
-  }, [usdAmount, sourceToken]);
+  }, [usdAmount, sourceToken, prices]);
 
   const targetAmount = useMemo(() => {
-    const price = MOCK_PRICES[targetToken];
+    const price = prices[targetToken];
     return price ? usdAmount / price : null;
-  }, [usdAmount, targetToken]);
+  }, [usdAmount, targetToken, prices]);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <div className="frame">
         <h1 className="title">Token Price Explorer</h1>
+        
+        {error && (
+          <div className="error-banner">
+            <p>Error loading prices: {error}</p>
+            <button type="button" onClick={refetch}>
+              Retry
+            </button>
+          </div>
+        )}
         <div className="token-row" role="tablist">
           {TOKEN_LIST.map((token) => (
             <TokenChip
@@ -83,7 +87,8 @@ const App = () => {
               <TokenDisplay
                 token={sourceToken}
                 amount={sourceAmount}
-                price={MOCK_PRICES[sourceToken]}
+                price={prices[sourceToken]}
+                isLoading={isLoading}
               />
             </div>
           </Panel>
@@ -104,7 +109,8 @@ const App = () => {
               <TokenDisplay
                 token={targetToken}
                 amount={targetAmount}
-                price={MOCK_PRICES[targetToken]}
+                price={prices[targetToken]}
+                isLoading={isLoading}
               />
             </div>
           </Panel>
@@ -115,5 +121,3 @@ const App = () => {
 };
 
 export default App;
-
-

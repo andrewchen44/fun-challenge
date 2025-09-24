@@ -16,7 +16,7 @@ export const TokenDisplay = ({ token, amount, price, isLoading = false }: TokenD
   };
 
   const formatPrice = (value: number | null) => {
-    if (value === null) return '—';
+    if (!value) return '—';
     return `$${value.toLocaleString()}`;
   };
 
