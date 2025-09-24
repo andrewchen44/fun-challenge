@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import type { Token } from '../constants/tokens';
 import { getTokenPrices, getTokenPrice } from '../services/tokenApi';
@@ -26,7 +26,10 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
       setIsLoading(true);
       setError(null);
 
-      const fetchedPrices = await getTokenPrices(tokens);
+      // Deduplicate tokens to avoid making duplicate API calls
+      const uniqueTokens = [...new Set(tokens)];
+      console.log(`Fetching prices for ${uniqueTokens.length} unique tokens:`, uniqueTokens);
+      const fetchedPrices = await getTokenPrices(uniqueTokens);
       setPrices((prev) => ({ ...prev, ...fetchedPrices }));
       setLastFetched(new Date());
     } catch (err) {
@@ -50,13 +53,14 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
     }
   }, []);
 
-  const selectedTokensKey = selectedTokens.join(',');
+  const uniqueTokens = useMemo(() => [...new Set(selectedTokens)], [selectedTokens]);
+  const selectedTokensKey = uniqueTokens.join(',');
 
   useEffect(() => {
-    if (selectedTokens.length > 0) {
-      fetchPrices(selectedTokens);
+    if (uniqueTokens.length > 0) {
+      fetchPrices(uniqueTokens);
     }
-  }, [selectedTokens, selectedTokensKey, fetchPrices]);
+  }, [uniqueTokens, selectedTokensKey, fetchPrices]);
 
   return {
     prices,
