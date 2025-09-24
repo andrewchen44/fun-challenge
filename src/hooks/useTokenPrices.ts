@@ -53,11 +53,14 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
     }
   }, []);
 
+  const selectedTokensKey = selectedTokens.join(',');
+
   useEffect(() => {
     if (selectedTokens.length > 0) {
       fetchPrices(selectedTokens);
     }
-  }, [selectedTokens, fetchPrices]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTokensKey, fetchPrices]);
 
   return {
     prices,

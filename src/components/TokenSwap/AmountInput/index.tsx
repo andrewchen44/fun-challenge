@@ -19,7 +19,7 @@ export const AmountInput = ({
   placeholder = '0.00',
   disabled = false,
   min = 0,
-  step = 0.01,
+  step = 0.1,
 }: AmountInputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value) || 0;
