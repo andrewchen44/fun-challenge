@@ -12,10 +12,10 @@ const App = () => {
   const [usdAmount, setUsdAmount] = useState<number>(100);
 
   // Fetch real token prices from API for selected tokens only
-  const { prices, isLoading, error, lastFetched, refetch } = useTokenPrices([
+  const { prices, isLoading, error, lastFetched, refetch } = useTokenPrices(
     sourceToken,
     targetToken,
-  ]);
+  );
 
   const handleSourceTokenChange = useCallback((token: Token) => {
     setSourceToken(token);

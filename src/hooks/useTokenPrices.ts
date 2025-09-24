@@ -13,9 +13,9 @@ interface UseTokenPricesReturn {
 }
 
 /**
- * Hook to fetch and manage token prices for specific tokens
+ * Hook to fetch and manage token prices for two specific tokens
  */
-export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
+export function useTokenPrices(sourceToken: Token, targetToken: Token): UseTokenPricesReturn {
   const [prices, setPrices] = useState<PartialTokenPrices>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,21 +53,19 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
     }
   }, []);
 
-  const selectedTokensKey = selectedTokens.join(',');
-
   useEffect(() => {
-    if (selectedTokens.length > 0) {
-      fetchPrices(selectedTokens);
+    const tokens = [sourceToken, targetToken].filter(Boolean);
+    if (tokens.length > 0) {
+      fetchPrices(tokens);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTokensKey, fetchPrices]);
+  }, [sourceToken, targetToken, fetchPrices]);
 
   return {
     prices,
     isLoading,
     error,
     lastFetched,
-    refetch: () => fetchPrices(selectedTokens),
+    refetch: () => fetchPrices([sourceToken, targetToken]),
     refetchToken,
   };
 }

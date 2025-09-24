@@ -78,7 +78,7 @@ export async function getTokenPrice(token: Token): Promise<PriceInfo | null> {
 /**
  * Get multiple token prices in parallel
  */
-export async function getTokenPrices(tokens: Token[]): Promise<TokenPrices> {
+export async function getTokenPrices(tokens: Token[]): Promise<PartialTokenPrices> {
   const pricePromises = tokens.map(async (token) => {
     const priceInfo = await getTokenPrice(token);
     return { token, price: priceInfo?.price || null };
@@ -86,11 +86,8 @@ export async function getTokenPrices(tokens: Token[]): Promise<TokenPrices> {
 
   const results = await Promise.all(pricePromises);
 
-  return results.reduce(
-    (acc, { token, price }) => {
-      acc[token] = price;
-      return acc;
-    },
-    {} as Record<Token, number | null>,
-  );
+  return results.reduce((acc, { token, price }) => {
+    acc[token] = price;
+    return acc;
+  }, {} as PartialTokenPrices);
 }

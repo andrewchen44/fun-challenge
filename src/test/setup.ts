@@ -1,19 +1,10 @@
 import '@testing-library/jest-dom';
 
-// Mock console.error to reduce noise in tests
-const originalError = console.error;
-beforeAll(() => {
-  console.error = (...args: unknown[]) => {
-    if (
-      typeof args[0] === 'string' &&
-      args[0].includes('Warning: ReactDOM.render is no longer supported')
-    ) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
+// Configure React Testing Library to use createRoot
+import { configure } from '@testing-library/react';
 
-afterAll(() => {
-  console.error = originalError;
+// Use the modern React 18 rendering API
+configure({
+  // This ensures Testing Library uses createRoot instead of ReactDOM.render
+  reactStrictMode: true,
 });

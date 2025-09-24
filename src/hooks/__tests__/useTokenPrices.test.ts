@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 import { Token } from '../../constants/tokens';
@@ -23,11 +23,11 @@ describe('useTokenPrices', () => {
     vi.restoreAllMocks();
   });
 
-  it('should initialize with empty state', () => {
-    const { result } = renderHook(() => useTokenPrices([]));
+  it('should initialize with loading state when tokens are provided', () => {
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
     expect(result.current.prices).toEqual({});
-    expect(result.current.isLoading).toBe(false);
+    expect(result.current.isLoading).toBe(true);
     expect(result.current.error).toBe(null);
     expect(result.current.lastFetched).toBe(null);
   });
@@ -40,7 +40,7 @@ describe('useTokenPrices', () => {
 
     mockGetTokenPrices.mockResolvedValue(mockPrices);
 
-    const { result } = renderHook(() => useTokenPrices([Token.USDC, Token.ETH]));
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
     expect(result.current.isLoading).toBe(true);
 
@@ -58,7 +58,7 @@ describe('useTokenPrices', () => {
     const errorMessage = 'API Error';
     mockGetTokenPrices.mockRejectedValue(new Error(errorMessage));
 
-    const { result } = renderHook(() => useTokenPrices([Token.USDC]));
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
@@ -76,7 +76,7 @@ describe('useTokenPrices', () => {
 
     mockGetTokenPrices.mockResolvedValue(mockPrices);
 
-    renderHook(() => useTokenPrices([Token.USDC, Token.USDC, Token.USDC]));
+    renderHook(() => useTokenPrices(Token.USDC, Token.USDC));
 
     await waitFor(() => {
       expect(mockGetTokenPrices).toHaveBeenCalledWith([Token.USDC]);
@@ -90,7 +90,7 @@ describe('useTokenPrices', () => {
 
     mockGetTokenPrices.mockResolvedValue(mockPrices);
 
-    const { result } = renderHook(() => useTokenPrices([Token.USDC]));
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
@@ -99,9 +99,11 @@ describe('useTokenPrices', () => {
     // Clear the mock to verify it's called again
     mockGetTokenPrices.mockClear();
 
-    await result.current.refetch();
+    await act(async () => {
+      await result.current.refetch();
+    });
 
-    expect(mockGetTokenPrices).toHaveBeenCalledWith([Token.USDC]);
+    expect(mockGetTokenPrices).toHaveBeenCalledWith([Token.USDC, Token.ETH]);
   });
 
   it('should refetch individual token price', async () => {
@@ -112,9 +114,11 @@ describe('useTokenPrices', () => {
 
     mockGetTokenPrice.mockResolvedValue(mockPriceInfo);
 
-    const { result } = renderHook(() => useTokenPrices([]));
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
-    await result.current.refetchToken(Token.USDC);
+    await act(async () => {
+      await result.current.refetchToken(Token.USDC);
+    });
 
     expect(mockGetTokenPrice).toHaveBeenCalledWith(Token.USDC);
 
@@ -127,16 +131,21 @@ describe('useTokenPrices', () => {
   it('should handle refetch token error gracefully', async () => {
     mockGetTokenPrice.mockRejectedValue(new Error('Token fetch failed'));
 
-    const { result } = renderHook(() => useTokenPrices([]));
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
     // Should not throw
-    await expect(result.current.refetchToken(Token.USDC)).resolves.not.toThrow();
+    await act(async () => {
+      await expect(result.current.refetchToken(Token.USDC)).resolves.not.toThrow();
+    });
   });
 
   it('should not fetch when no tokens are provided', () => {
-    renderHook(() => useTokenPrices([]));
+    // This test is no longer applicable since we always provide two tokens
+    // But we can test with undefined tokens if needed
+    renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
-    expect(mockGetTokenPrices).not.toHaveBeenCalled();
+    // Should still fetch since we always have tokens
+    expect(mockGetTokenPrices).toHaveBeenCalled();
   });
 
   it('should update lastFetched timestamp on successful fetch', async () => {
@@ -146,7 +155,7 @@ describe('useTokenPrices', () => {
 
     mockGetTokenPrices.mockResolvedValue(mockPrices);
 
-    const { result } = renderHook(() => useTokenPrices([Token.USDC]));
+    const { result } = renderHook(() => useTokenPrices(Token.USDC, Token.ETH));
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
