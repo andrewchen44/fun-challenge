@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 
 import type { Token } from '../constants/tokens';
-import { getTokenPrices, getTokenPrice } from '../services/tokenApi';
+import { getTokenPrices, getTokenPrice, type PartialTokenPrices } from '../services/tokenApi';
 
 interface UseTokenPricesReturn {
-  prices: Partial<Record<Token, number | null>>;
+  prices: PartialTokenPrices;
   isLoading: boolean;
   error: string | null;
   lastFetched: Date | null;
@@ -16,7 +16,7 @@ interface UseTokenPricesReturn {
  * Hook to fetch and manage token prices for specific tokens
  */
 export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
-  const [prices, setPrices] = useState<Partial<Record<Token, number | null>>>({});
+  const [prices, setPrices] = useState<PartialTokenPrices>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastFetched, setLastFetched] = useState<Date | null>(null);
@@ -53,13 +53,11 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
     }
   }, []);
 
-  const selectedTokensKey = selectedTokens.join(',');
-
   useEffect(() => {
     if (selectedTokens.length > 0) {
       fetchPrices(selectedTokens);
     }
-  }, [selectedTokensKey, fetchPrices]);
+  }, [selectedTokens, fetchPrices]);
 
   return {
     prices,

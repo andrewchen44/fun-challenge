@@ -23,6 +23,9 @@ export interface PriceInfo {
   symbol: string;
 }
 
+export type TokenPrices = Record<Token, number | null>;
+export type PartialTokenPrices = Partial<Record<Token, number | null>>;
+
 /**
  * Get token information (address) by chain ID and symbol
  */
@@ -75,7 +78,7 @@ export async function getTokenPrice(token: Token): Promise<PriceInfo | null> {
 /**
  * Get multiple token prices in parallel
  */
-export async function getTokenPrices(tokens: Token[]): Promise<Record<Token, number | null>> {
+export async function getTokenPrices(tokens: Token[]): Promise<TokenPrices> {
   const pricePromises = tokens.map(async (token) => {
     const priceInfo = await getTokenPrice(token);
     return { token, price: priceInfo?.price || null };
