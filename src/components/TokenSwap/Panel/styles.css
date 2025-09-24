@@ -1,7 +1,9 @@
 .panel {
   min-height: var(--panel-min-height);
-  border: var(--border-width-thick) solid var(--color-primary);
+  border: var(--border-width-thick) solid var(--color-border);
   border-radius: var(--border-radius);
+  background: var(--color-background);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .panel-content {

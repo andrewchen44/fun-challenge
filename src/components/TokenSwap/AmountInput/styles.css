@@ -12,17 +12,23 @@
 
 .amount-input__field {
   padding: var(--spacing-xs) var(--spacing-sm);
-  border: var(--border-width) solid var(--color-primary);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius-xs);
   background: var(--color-background);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  transition: border-color var(--transition-fast);
+  color: var(--color-text);
+  transition: all var(--transition-fast);
 }
 
 .amount-input__field:focus {
   outline: none;
-  border-color: var(--color-primary-hover);
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.amount-input__field:hover {
+  border-color: var(--color-border-focus);
 }
 
 .amount-input__field--disabled {

@@ -14,7 +14,7 @@
 .token-display__symbol {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text);
+  color: var(--color-text-light);
 }
 
 .token-display__loading {
@@ -26,10 +26,15 @@
 .token-display__price {
   font-size: var(--font-size-base);
   color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
 }
 
 .token-display__amount {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-light);
+  background: var(--color-background-active);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-xs);
+  border: 1px solid var(--color-border);
 }

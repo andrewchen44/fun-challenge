@@ -1,21 +1,27 @@
 .chip {
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--border-radius-chip);
-  border: var(--border-width) solid var(--color-primary);
-  background: transparent;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-background);
   font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
   cursor: pointer;
   transition: all var(--transition-fast);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .chip:hover:not(.chip--disabled) {
-  border-color: var(--color-primary-hover);
+  border-color: var(--color-border-focus);
+  background: var(--color-background-active);
   transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .chip--active {
-  background: var(--color-background-active);
-  border-color: var(--color-primary-active);
+  background: var(--color-border-focus);
+  border-color: var(--color-border-focus);
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
 }
 
 .chip--disabled {
