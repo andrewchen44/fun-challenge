@@ -31,7 +31,7 @@ A modern React + TypeScript application for exploring cryptocurrency token price
 
 ## Prerequisites
 
-- **Node.js**: Version 18 or higher (required for Vite and modern JavaScript features)
+- **Node.js**: Version 22 or higher (required for Vite and modern JavaScript features)
 - **npm**: Version 8 or higher
 
 ## Getting Started
