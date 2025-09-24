@@ -26,11 +26,11 @@ export const TokenDisplay = ({ token, amount, price, isLoading = false }: TokenD
         <span className="token-display__symbol">{token}</span>
         {isLoading && <span className="token-display__loading">Loading...</span>}
       </div>
-      
+
       <div className="token-display__price">
         {formatPrice(price)} per {token}
       </div>
-      
+
       <div className="token-display__amount">
         ≈ {formatAmount(amount)} {token}
       </div>

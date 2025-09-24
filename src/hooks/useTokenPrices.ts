@@ -24,9 +24,9 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const fetchedPrices = await getTokenPrices(tokens);
-      setPrices(prev => ({ ...prev, ...fetchedPrices }));
+      setPrices((prev) => ({ ...prev, ...fetchedPrices }));
       setLastFetched(new Date());
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch prices';
@@ -40,7 +40,7 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
   const refetchToken = useCallback(async (token: Token) => {
     try {
       const priceInfo = await getTokenPrice(token);
-      setPrices(prev => ({
+      setPrices((prev) => ({
         ...prev,
         [token]: priceInfo?.price || null,
       }));

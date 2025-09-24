@@ -1,12 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import {
-  TokenChip,
-  Panel,
-  TokenSelector,
-  AmountInput,
-  TokenDisplay
-} from './components/TokenSwap';
+import { TokenChip, Panel, TokenSelector, AmountInput, TokenDisplay } from './components/TokenSwap';
 import { ErrorFallback } from './components/ErrorFallback';
 import { Token, TOKEN_LIST, DEFAULT_TOKEN } from './constants/tokens';
 import { useTokenPrices } from './hooks/useTokenPrices';
@@ -17,7 +11,10 @@ const App = () => {
   const [usdAmount, setUsdAmount] = useState<number>(100);
 
   // Fetch real token prices from API for selected tokens only
-  const { prices, isLoading, error, lastFetched, refetch } = useTokenPrices([sourceToken, targetToken]);
+  const { prices, isLoading, error, lastFetched, refetch } = useTokenPrices([
+    sourceToken,
+    targetToken,
+  ]);
 
   const handleSourceTokenChange = useCallback((token: Token) => {
     setSourceToken(token);
@@ -45,7 +42,7 @@ const App = () => {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <div className="frame">
         <h1 className="title">Token Price Explorer</h1>
-        
+
         {error && (
           <div className="error-banner">
             <p>Error loading prices: {error}</p>
@@ -58,17 +55,13 @@ const App = () => {
         <div className="price-info">
           {lastFetched && (
             <p className="last-updated">
-              Last updated: {lastFetched.toLocaleString(undefined, {
-                timeZoneName: 'short'
+              Last updated:{' '}
+              {lastFetched.toLocaleString(undefined, {
+                timeZoneName: 'short',
               })}
             </p>
           )}
-          <button 
-            type="button" 
-            className="refresh-button"
-            onClick={refetch}
-            disabled={isLoading}
-          >
+          <button type="button" className="refresh-button" onClick={refetch} disabled={isLoading}>
             {isLoading ? 'Refreshing...' : 'Refresh Prices'}
           </button>
         </div>
@@ -86,7 +79,7 @@ const App = () => {
                   />
                 ))}
               </div>
-              
+
               <AmountInput
                 label="USD Amount"
                 value={usdAmount}
@@ -96,7 +89,7 @@ const App = () => {
                 step={0.01}
                 disabled={isLoading}
               />
-              
+
               <TokenDisplay
                 token={sourceToken}
                 amount={sourceAmount}
@@ -105,11 +98,11 @@ const App = () => {
               />
             </div>
           </Panel>
-          
+
           <div className="arrow" aria-hidden="true">
             →
           </div>
-          
+
           <Panel>
             <div className="panel-content">
               <div className="token-row" role="tablist">
@@ -123,14 +116,12 @@ const App = () => {
                   />
                 ))}
               </div>
-              
+
               <div className="amount-display">
                 <label className="amount-display__label">USD Amount</label>
-                <div className="amount-display__value">
-                  ${usdAmount.toFixed(2)}
-                </div>
+                <div className="amount-display__value">${usdAmount.toFixed(2)}</div>
               </div>
-              
+
               <TokenDisplay
                 token={targetToken}
                 amount={targetAmount}

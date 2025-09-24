@@ -10,12 +10,7 @@ interface TokenChipProps {
   disabled?: boolean;
 }
 
-export const TokenChip = ({ 
-  label, 
-  active = false, 
-  onClick, 
-  disabled = false
-}: TokenChipProps) => {
+export const TokenChip = ({ label, active = false, onClick, disabled = false }: TokenChipProps) => {
   return (
     <button
       type="button"
@@ -28,5 +23,3 @@ export const TokenChip = ({
     </button>
   );
 };
-
-

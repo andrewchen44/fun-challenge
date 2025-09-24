@@ -12,14 +12,14 @@ interface AmountInputProps {
   step?: number;
 }
 
-export const AmountInput = ({ 
-  label, 
-  value, 
-  onChange, 
-  placeholder = "0.00",
+export const AmountInput = ({
+  label,
+  value,
+  onChange,
+  placeholder = '0.00',
   disabled = false,
   min = 0,
-  step = 0.01
+  step = 0.01,
 }: AmountInputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value) || 0;

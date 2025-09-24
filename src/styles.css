@@ -1,6 +1,6 @@
 :root {
   color-scheme: light dark;
-  
+
   /* Colors */
   --color-primary: #e2e8f0;
   --color-primary-hover: #cbd5e1;
@@ -20,7 +20,7 @@
   --color-button-hover: #2c5aa0;
   --color-button-text: white;
   --color-code-bg: #f7f7f7;
-  
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
@@ -28,7 +28,7 @@
   --spacing-lg: 2rem;
   --spacing-xl: 2.5rem;
   --spacing-2xl: 3rem;
-  
+
   /* Border */
   --border-width: 2px;
   --border-width-thick: 3px;
@@ -37,7 +37,7 @@
   --border-radius-sm: 8px;
   --border-radius-xs: 6px;
   --border-radius-chip: 8px;
-  
+
   /* Typography */
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -48,16 +48,16 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --line-height-base: 1.5;
-  
+
   /* Transitions */
   --transition-fast: 0.2s ease-in-out;
   --transition-base: 0.3s ease-in-out;
-  
+
   /* Layout */
   --container-max-width: 980px;
   --panel-min-height: 280px;
   --arrow-size: 40px;
-  
+
   /* Panel Content */
   --panel-content-gap: 1.5rem;
 
@@ -73,7 +73,14 @@
 
 body {
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Arial,
+    sans-serif;
   line-height: var(--line-height-base);
   color: var(--color-text);
 }
@@ -85,7 +92,9 @@ body {
   border: var(--border-width-thick) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-background);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .title {
@@ -123,12 +132,12 @@ body {
     margin: var(--spacing-sm);
     padding: var(--spacing-md);
   }
-  
+
   .panes {
     grid-template-columns: 1fr;
     gap: var(--spacing-sm);
   }
-  
+
   .arrow {
     transform: rotate(90deg);
   }
@@ -229,5 +238,3 @@ body {
   color: var(--color-text);
   text-align: center;
 }
-
-

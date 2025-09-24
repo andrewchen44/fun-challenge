@@ -11,12 +11,12 @@ interface TokenSelectorProps {
   disabled?: boolean;
 }
 
-export const TokenSelector = ({ 
-  label, 
-  selectedToken, 
-  onTokenChange, 
+export const TokenSelector = ({
+  label,
+  selectedToken,
+  onTokenChange,
   tokens,
-  disabled = false 
+  disabled = false,
 }: TokenSelectorProps) => {
   return (
     <div className="token-selector">

@@ -6,11 +6,5 @@ interface PanelProps {
 }
 
 export const Panel = ({ children }: PanelProps) => {
-  return (
-    <section className="panel">
-      {children}
-    </section>
-  );
+  return <section className="panel">{children}</section>;
 };
-
-

@@ -2,16 +2,15 @@ module.exports = {
   root: true,
   env: { browser: true, es2022: true, node: true },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react-refresh', 'react-hooks', 'import', 'jsx-a11y'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'import', 'jsx-a11y'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:react-refresh/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:jsx-a11y/recommended',
-    'prettier'
+    'prettier',
   ],
   ignorePatterns: ['dist', 'coverage'],
   rules: {
@@ -23,13 +22,11 @@ module.exports = {
       {
         groups: [['builtin', 'external'], ['internal'], ['parent', 'sibling', 'index']],
         alphabetize: { order: 'asc', caseInsensitive: true },
-        'newlines-between': 'always'
-      }
+        'newlines-between': 'always',
+      },
     ],
 
     // TS safety
-    '@typescript-eslint/no-floating-promises': 'warn',
-    '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -39,8 +36,6 @@ module.exports = {
     'no-unneeded-ternary': 'warn',
     'no-param-reassign': ['error', { props: false }],
     'no-fallthrough': 'error',
-    'no-console': ['warn', { allow: ['warn', 'error'] }]
-  }
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+  },
 };
-
-

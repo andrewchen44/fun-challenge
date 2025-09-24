@@ -81,9 +81,12 @@ export async function getTokenPrices(tokens: Token[]): Promise<Record<Token, num
   });
 
   const results = await Promise.all(pricePromises);
-  
-  return results.reduce((acc, { token, price }) => {
-    acc[token] = price;
-    return acc;
-  }, {} as Record<Token, number | null>);
+
+  return results.reduce(
+    (acc, { token, price }) => {
+      acc[token] = price;
+      return acc;
+    },
+    {} as Record<Token, number | null>,
+  );
 }
