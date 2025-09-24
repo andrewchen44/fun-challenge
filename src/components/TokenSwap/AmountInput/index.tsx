@@ -1,5 +1,5 @@
+import { clsx } from 'clsx';
 import type { ChangeEvent } from 'react';
-import clsx from 'clsx';
 import './styles.css';
 
 interface AmountInputProps {

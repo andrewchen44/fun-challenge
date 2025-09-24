@@ -1,6 +1,7 @@
 import { getAssetErc20ByChainAndSymbol, getAssetPriceInfo } from '@funkit/api-base';
-import { Token } from '../constants/tokens';
 import type { Erc20AssetInfo, GetAssetPriceInfoResponse } from '@funkit/api-base';
+
+import { Token } from '../constants/tokens';
 
 export const TOKEN_CONFIG: Record<Token, { chainId: string; symbol: string }> = {
   [Token.USDC]: { chainId: '1', symbol: 'USDC' },

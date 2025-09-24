@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getTokenPrices, getTokenPrice } from '../services/tokenApi';
+
 import type { Token } from '../constants/tokens';
+import { getTokenPrices, getTokenPrice } from '../services/tokenApi';
 
 interface UseTokenPricesReturn {
   prices: Partial<Record<Token, number | null>>;
@@ -49,11 +50,13 @@ export function useTokenPrices(selectedTokens: Token[]): UseTokenPricesReturn {
     }
   }, []);
 
+  const selectedTokensKey = selectedTokens.join(',');
+
   useEffect(() => {
     if (selectedTokens.length > 0) {
       fetchPrices(selectedTokens);
     }
-  }, [selectedTokens.join(','), fetchPrices]);
+  }, [selectedTokens, selectedTokensKey, fetchPrices]);
 
   return {
     prices,

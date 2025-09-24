@@ -15,19 +15,19 @@ A modern React + TypeScript application for exploring cryptocurrency token price
 ## Tech Stack
 
 - **Frontend**: React 18 + TypeScript
-  - *Why*: React provides component-based architecture for maintainable UI, TypeScript ensures type safety and catches errors at compile time
+  - _Why_: React provides component-based architecture for maintainable UI, TypeScript ensures type safety and catches errors at compile time
 - **Build Tool**: Vite
-  - *Why*: Fast development server with HMR, optimized production builds, and excellent TypeScript support out of the box
+  - _Why_: Fast development server with HMR, optimized production builds, and excellent TypeScript support out of the box
 - **Styling**: CSS with custom properties (design system)
-  - *Why*: Native CSS approach with design tokens for consistency, maintainability, and performance without additional runtime overhead
+  - _Why_: Native CSS approach with design tokens for consistency, maintainability, and performance without additional runtime overhead
 - **API**: Funkit API Base for token data and prices
-  - *Why*: Provides reliable, real-time cryptocurrency data with proper TypeScript types and error handling
+  - _Why_: Provides reliable, real-time cryptocurrency data with proper TypeScript types and error handling
 - **Code Quality**: ESLint + Prettier
-  - *Why*: ESLint catches code quality issues and enforces best practices, Prettier ensures consistent code formatting across the team
+  - _Why_: ESLint catches code quality issues and enforces best practices, Prettier ensures consistent code formatting across the team
 - **Git Hooks**: Husky + lint-staged
-  - *Why*: Automatically runs linting and formatting on staged files before commits, preventing code quality issues from entering the repository
+  - _Why_: Automatically runs linting and formatting on staged files before commits, preventing code quality issues from entering the repository
 - **Error Handling**: React Error Boundary
-  - *Why*: Gracefully handles component crashes and provides fallback UI, improving user experience and debugging capabilities
+  - _Why_: Gracefully handles component crashes and provides fallback UI, improving user experience and debugging capabilities
 
 ## Prerequisites
 
@@ -119,12 +119,14 @@ This project uses **husky** and **lint-staged** to automatically run linting and
 - **Staged files only**: Only processes files that are staged for commit
 
 ### What happens on commit:
+
 1. ESLint runs with `--fix` flag on staged `.ts` and `.tsx` files
 2. Prettier formats staged `.ts`, `.tsx`, `.css`, `.md`, and `.json` files
 3. If any issues cannot be auto-fixed, the commit is blocked
 4. You must fix the issues manually and stage the changes again
 
 ### Bypassing hooks (not recommended):
+
 ```bash
 git commit --no-verify -m "commit message"
 ```
@@ -155,7 +157,6 @@ This application was built with the following key design assumptions in mind:
 - **Simplicity**: Clean, intuitive interface that doesn't overwhelm users
 - **Reliability**: Robust error handling and loading states
 - **Accessibility**: Built with semantic HTML and ARIA attributes
-
 
 ## Security Considerations
 

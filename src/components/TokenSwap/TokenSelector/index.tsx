@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import './styles.css';
 
 import type { Token } from '../../../constants/tokens';

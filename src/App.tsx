@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { TokenChip, Panel, TokenSelector, AmountInput, TokenDisplay } from './components/TokenSwap';
+
 import { ErrorFallback } from './components/ErrorFallback';
+import { TokenChip, Panel, AmountInput, TokenDisplay } from './components/TokenSwap';
 import { Token, TOKEN_LIST, DEFAULT_TOKEN } from './constants/tokens';
 import { useTokenPrices } from './hooks/useTokenPrices';
 
@@ -118,7 +119,7 @@ const App = () => {
               </div>
 
               <div className="amount-display">
-                <label className="amount-display__label">USD Amount</label>
+                <div className="amount-display__label">USD Amount</div>
                 <div className="amount-display__value">${usdAmount.toFixed(2)}</div>
               </div>
 
