@@ -111,4 +111,20 @@ describe('AmountInput', () => {
     expect(input).toHaveValue('123');
     expect(handleChange).toHaveBeenCalledWith(123);
   });
+
+  it('should prevent typing numbers larger than a trillion', async () => {
+    const user = userEvent.setup();
+    const handleChange = vi.fn();
+
+    render(<AmountInput label="USD Amount" value={0} onChange={handleChange} />);
+
+    const input = screen.getByLabelText('USD Amount');
+
+    // Try to type a number with 14 digits (larger than trillion)
+    await user.clear(input);
+    await user.type(input, '12345678901234');
+
+    // Should only show the first 13 digits (trillion limit)
+    expect(input).toHaveValue('1234567890123');
+  });
 });

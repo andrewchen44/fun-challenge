@@ -34,6 +34,11 @@ export const AmountInput = ({
     // Filter out any non-numeric characters
     const filteredValue = rawValue.replace(/[^0-9]/g, '');
 
+    // Prevent typing numbers larger than a trillion (13 digits)
+    if (filteredValue.length > 13) {
+      return;
+    }
+
     setInputValue(filteredValue);
 
     if (filteredValue === '') {
